@@ -22,37 +22,39 @@
       position: relative;
     }
 
-    /* Background Video */
-    #bg-video {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: -2;
-      filter: brightness(0.65) contrast(1.05);
-    }
-
-    #bg-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(63, 42, 42, 0.5);
-      z-index: -1;
-    }
-
-    /* Envelope */
+    /* Background Foto - Intro (Envelope) */
     #envelope-screen {
       position: fixed; inset: 0;
-      background: rgba(0,0,0,0.35);
-      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.5)),
+                  url('./Pre Wedding Shoot.webp') center/cover no-repeat;
+      display: flex; 
+      align-items: center; 
+      justify-content: center;
       z-index: 1000; 
       transition: opacity 1.8s ease;
     }
 
+    /* Background Video - Halaman Utama */
+    #bg-video {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: -2;
+      filter: brightness(0.65) contrast(1.08);
+      display: none;
+    }
+
+    #bg-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(63, 42, 42, 0.48);
+      z-index: -1;
+      display: none;
+    }
+
+    /* Envelope */
     .envelope {
       width: 340px;
       height: 230px;
@@ -60,9 +62,10 @@
       border: 12px solid #c19a6b;
       border-top: 12px solid #a67c52;
       position: relative;
-      box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+      box-shadow: 0 25px 60px rgba(0,0,0,0.5);
       cursor: pointer;
       overflow: hidden;
+      border-radius: 8px;
     }
     .flap {
       position: absolute; top: 0; left: 0;
@@ -86,7 +89,7 @@
       display: flex; align-items: center; justify-content: center;
       color: white; font-size: 1.4rem;
       z-index: 3;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
 
     #main-invitation { display: none; }
@@ -102,7 +105,7 @@
 
     .monogram {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(4.5rem, 12vw, 7rem);
+      font-size: clamp(4.5rem, 12vw, 7.5rem);
       letter-spacing: -6px;
       text-shadow: 0 10px 30px rgba(0,0,0,0.8);
     }
@@ -124,7 +127,7 @@
     @media (min-width: 768px) {
       .content-row, .content-row.reverse {
         grid-template-columns: 1fr 1fr;
-        gap: 60px;
+        gap: 70px;
       }
     }
 
@@ -203,19 +206,18 @@
 </head>
 <body>
 
-  <!-- Background Video -->
-  <video id="bg-video" autoplay loop muted playsinline>
+  <!-- Background Video (Main Page) -->
+  <video id="bg-video" loop muted playsinline>
     <source src="./trend slowmo VOLDEN BROWN X LOVE STORY -  De Oliveira - Copy.mp4" type="video/mp4">
-    Your browser does not support the video tag.
   </video>
   <div id="bg-overlay"></div>
 
-  <!-- ENVELOPE -->
+  <!-- ENVELOPE SCREEN (Background Foto) -->
   <div id="envelope-screen">
     <div class="envelope" id="envelope" onclick="openEnvelope()">
       <div class="flap"></div>
       <div class="seal">A&M</div>
-      <div style="position:absolute; top:55%; left:50%; transform:translate(-50%,-50%); text-align:center; color:#5c4a4a; font-size:1.05rem; z-index:1;">
+      <div style="position:absolute; top:55%; left:50%; transform:translate(-50%,-50%); text-align:center; color:#f5e8d3; font-size:1.08rem; z-index:1; text-shadow: 0 2px 10px rgba(0,0,0,0.7);">
         <strong>Antonio & Maria</strong><br><small>12.12.2030</small>
       </div>
     </div>
@@ -323,6 +325,8 @@
   <script>
     let isPlaying = false;
     const audio = document.getElementById('weddingMusic');
+    const bgVideo = document.getElementById('bg-video');
+    const bgOverlay = document.getElementById('bg-overlay');
 
     function openEnvelope() {
       const envelope = document.getElementById('envelope');
@@ -336,11 +340,16 @@
         setTimeout(() => {
           screen.style.display = 'none';
           main.style.display = 'block';
-          
+
+          // Aktifkan Video Background
+          bgVideo.style.display = 'block';
+          bgOverlay.style.display = 'block';
+          bgVideo.play().catch(() => {});
+
           audio.play().catch(() => {});
           isPlaying = true;
           document.getElementById('musicIcon').classList.replace('fa-play', 'fa-pause');
-          
+
           createConfetti();
           observeSections();
         }, 800);
@@ -351,9 +360,7 @@
       const rows = document.querySelectorAll('.content-row');
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
+          if (entry.isIntersecting) entry.target.classList.add('visible');
         });
       }, { threshold: 0.15 });
       rows.forEach(row => observer.observe(row));
@@ -416,13 +423,11 @@
       }
     }
 
-    // Keyboard support
+    // Keyboard Support
     document.addEventListener('keydown', e => {
       if (e.key === "Enter") {
         const envelopeScreen = document.getElementById('envelope-screen');
-        if (envelopeScreen.style.display !== 'none') {
-          openEnvelope();
-        }
+        if (envelopeScreen.style.display !== 'none') openEnvelope();
       }
     });
   </script>
