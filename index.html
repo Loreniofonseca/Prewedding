@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="tet">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Antonio & Maria • 12.12.2030</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --gold: #d4af88;
+      --cream: #f8f1e9;
+      --dark: #3f2a2a;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #e8d5c0;
+      color: var(--dark);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Floral Decoration */
+    body::before, body::after {
+      content: '🌸';
+      position: fixed;
+      font-size: 4rem;
+      opacity: 0.12;
+      z-index: -1;
+      pointer-events: none;
+      animation: floatFlower 28s infinite linear;
+    }
+    body::before { top: 5%; left: 5%; }
+    body::after { bottom: 8%; right: 5%; animation-delay: -14s; }
+
+    @keyframes floatFlower {
+      0%, 100% { transform: rotate(-15deg) translateY(0); }
+      50% { transform: rotate(20deg) translateY(-30px); }
+    }
+
+    /* Envelope */
+    #envelope-screen {
+      position: fixed; inset: 0;
+      background: linear-gradient(#e8d5c0, #d4b89e);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 1000; transition: opacity 1.5s ease;
+    }
+    .envelope {
+      width: 340px;
+      height: 230px;
+      background: #f5e8d3;
+      border: 12px solid #c19a6b;
+      border-top: 12px solid #a67c52;
+      position: relative;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+      cursor: pointer;
+      overflow: hidden;
+    }
+    .flap {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 120px;
+      background: linear-gradient(#e8c9a0, #d4af88);
+      clip-path: polygon(0 0, 50% 65%, 100% 0);
+      transition: all 1.4s cubic-bezier(0.6, 0, 0.3, 1);
+      z-index: 2;
+    }
+    .envelope.open .flap {
+      transform: rotateX(-165deg); 
+      height: 65px;
+    }
+    .seal {
+      position: absolute; top: 42px; left: 50%;
+      transform: translateX(-50%);
+      width: 60px; height: 60px;
+      background: radial-gradient(#c19a6b, #8c5f2e);
+      border: 4px solid #f5e8d3;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 1.4rem;
+      z-index: 3;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    #main-invitation { display: none; }
+
+    header {
+      height: 100vh;
+      min-height: 650px;
+      background: linear-gradient(rgba(63,42,42,0.55), rgba(63,42,42,0.65)),
+                  url('./Pre Wedding Shoot.webp') center/cover no-repeat;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; color: white;
+    }
+    .monogram {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(4.5rem, 12vw, 7rem);
+      letter-spacing: -6px;
+      text-shadow: 0 10px 25px rgba(0,0,0,0.6);
+    }
+
+    .section {
+      padding: 80px 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .content-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 40px;
+      align-items: center;
+      margin-bottom: 100px;
+    }
+    @media (min-width: 768px) {
+      .content-row, .content-row.reverse {
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+      }
+    }
+    .content-row.reverse { grid-template-columns: 1fr; }
+    @media (min-width: 768px) {
+      .content-row.reverse { grid-template-columns: 1fr 1fr; }
+    }
+
+    .section-img {
+      width: 100%;
+      height: 380px;
+      object-fit: cover;
+      border-radius: 20px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+      transition: transform 0.6s ease;
+    }
+    .content-row:hover .section-img {
+      transform: scale(1.03);
+    }
+
+    .section-text {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 1s ease;
+    }
+    .content-row.visible .section-text {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card {
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      padding: 40px 30px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.6rem;
+      margin-bottom: 20px;
+      text-align: center;
+      color: var(--dark);
+    }
+
+    .music-player {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: white;
+      padding: 12px 18px;
+      border-radius: 50px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      user-select: none;
+    }
+
+    input {
+      width: 100%;
+      padding: 15px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      font-size: 1rem;
+    }
+    button {
+      padding: 16px 40px;
+      font-size: 1.05rem;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ENVELOPE -->
+  <div id="envelope-screen">
+    <div class="envelope" id="envelope" onclick="openEnvelope()">
+      <div class="flap"></div>
+      <div class="seal">A&M</div>
+      <div style="position:absolute; top:55%; left:50%; transform:translate(-50%,-50%); text-align:center; color:#5c4a4a; font-size:1.05rem; z-index:1;">
+        <strong>Antonio & Maria</strong><br><small>12.12.2030</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN INVITATION -->
+  <div id="main-invitation">
+    <header>
+      <div>
+        <div class="monogram">A & M</div>
+        <p style="font-size:2rem; margin:12px 0; color:var(--gold);">ARE GETTING MARRIED</p>
+        <p style="font-size:1.4rem;">12 December 2030</p>
+      </div>
+    </header>
+
+    <div class="section">
+      <!-- Row 1 -->
+      <div class="content-row" id="row1">
+        <img src="./descărcare (1).jpg" class="section-img" alt="Antonio & Maria">
+        <div class="section-text">
+          <div class="card">
+            <h2>With All Our Love</h2>
+            <p style="font-size:1.2rem; line-height:1.8; text-align:center;">
+              Ho gratidaun no haksolok boot, ami konvida ita boot sira atu mai hamutuk ho ami iha dia ne'ebé importante liu iha ami-nia moris.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2 -->
+      <div class="content-row reverse" id="row2">
+        <div class="section-text">
+          <div class="card">
+            <h2>Event Details</h2>
+            <div style="display:grid; grid-template-columns:1fr; gap:20px; font-size:1.1rem; text-align:center; line-height:1.7;">
+              <div><strong>Akad Nikah / Holy Matrimony</strong> — 09.00 WIB</div>
+              <div><strong>Resepsi / Reception</strong> — 11.00 WIB</div>
+              <div><strong>Venue</strong> — Igreja Katedral, Dili</div>
+            </div>
+          </div>
+        </div>
+        <img src="./descărcare.webp" class="section-img" alt="Antonio & Maria">
+      </div>
+
+      <!-- Map -->
+      <div class="content-row" id="row3">
+        <img src="./Pre Wedding Shoot.webp" class="section-img" alt="Location">
+        <div class="section-text">
+          <div class="card">
+            <h2>Venue Location</h2>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3942.057!2d125.566!3d-8.556!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOHLCsDMzJzIxLjYiUyAxMjXCsDMzJzU3LjYiRQ!5e0!3m2!1sid!2sid!4v1730000000000" 
+              style="width:100%; height:320px; border:none; border-radius:16px;" allowfullscreen loading="lazy"></iframe>
+            <div style="text-align:center; margin-top:20px;">
+              <button onclick="getDirections()" style="background: var(--gold); color: white; border: none;">
+                <i class="fas fa-directions"></i> Get Directions / Hatene Dalan
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RSVP -->
+      <div class="content-row reverse" id="row4">
+        <div class="section-text">
+          <div class="card">
+            <h2>Will You Celebrate With Us?</h2>
+            <p style="text-align:center; margin:20px 0;">Favor preenche konfirmasaun</p>
+            
+            <input type="text" id="guestName" placeholder="Naran Kompletu / Full Name">
+            <input type="number" id="guestCount" value="1" placeholder="Jumlah Tamu / Number of Guests">
+            
+            <div style="display:flex; flex-direction:column; gap:12px; margin-top:25px;">
+              <button onclick="submitRSVP('yes')" style="background:linear-gradient(#d4af88,#e8c9a0); border:none; color:#3f2a2a; font-weight:600;">
+                💕 Hau Mai / I Will Attend
+              </button>
+              <button onclick="submitRSVP('no')" style="background:transparent; border:2px solid var(--gold); color:var(--dark);">
+                Deskulpa, La bele / Sorry, Cannot Attend
+              </button>
+            </div>
+            <div id="rsvpMsg" style="margin-top:25px; text-align:center; min-height:60px; font-weight:500;"></div>
+          </div>
+        </div>
+        <img src="./descărcare (1).jpg" class="section-img" alt="Antonio & Maria">
+      </div>
+    </div>
+
+    <footer style="background:#2c211f; color:#e8d5c0; text-align:center; padding:70px 20px;">
+      <p style="font-size:1.2rem;">Ho amor eternu,</p>
+      <h1 style="font-family:'Playfair Display',serif; color:var(--gold); margin:20px 0; font-size:2.8rem;">Antonio & Maria</h1>
+      <p>12 • 12 • 2030 • Igreja Katedral, Dili</p>
+    </footer>
+  </div>
+
+  <!-- Music Player -->
+  <div class="music-player" onclick="toggleMusic()">
+    <i class="fas fa-music"></i>
+    <span>Our Song</span>
+    <i class="fas fa-pause" id="musicIcon"></i>
+  </div>
+
+  <audio id="weddingMusic" loop>
+    <source src="./Right Here Waiting _ Shania Yan Cover.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    let isPlaying = false;
+    const audio = document.getElementById('weddingMusic');
+
+    function openEnvelope() {
+      const envelope = document.getElementById('envelope');
+      const screen = document.getElementById('envelope-screen');
+      const main = document.getElementById('main-invitation');
+
+      envelope.classList.add('open');
+
+      setTimeout(() => {
+        screen.style.opacity = '0';
+        setTimeout(() => {
+          screen.style.display = 'none';
+          main.style.display = 'block';
+          
+          audio.play().catch(() => {});
+          isPlaying = true;
+          document.getElementById('musicIcon').classList.replace('fa-play', 'fa-pause');
+          
+          createConfetti();
+          observeSections();
+        }, 800);
+      }, 1400);
+    }
+
+    function observeSections() {
+      const rows = document.querySelectorAll('.content-row');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.2 });
+
+      rows.forEach(row => observer.observe(row));
+    }
+
+    function getDirections() {
+      window.open("https://www.google.com/maps/dir/?api=1&destination=Igreja+Katedral,+Dili", "_blank");
+    }
+
+    function submitRSVP(answer) {
+      const name = document.getElementById('guestName').value.trim();
+      const count = document.getElementById('guestCount').value || 1;
+      const msg = document.getElementById('rsvpMsg');
+
+      if (!name) {
+        msg.innerHTML = `<span style="color:#ff6b6b;">⚠️ Favor preenche naran</span>`;
+        return;
+      }
+
+      if (answer === 'yes') {
+        msg.innerHTML = `<span style="color:#2e7d32;">❤️ Obrigadu ${name}!<br>Ami haksolok boot ita mai (${count} ema).</span>`;
+        createConfetti();
+      } else {
+        msg.innerHTML = `<span style="color:#c62828;">Obrigadu ${name}, deskulpa la bele mai.</span>`;
+      }
+    }
+
+    function toggleMusic() {
+      if (isPlaying) {
+        audio.pause();
+        document.getElementById('musicIcon').classList.replace('fa-pause', 'fa-play');
+      } else {
+        audio.play();
+        document.getElementById('musicIcon').classList.replace('fa-play', 'fa-pause');
+      }
+      isPlaying = !isPlaying;
+    }
+
+    function createConfetti() {
+      for (let i = 0; i < 80; i++) {
+        const c = document.createElement('div');
+        c.style.position = 'fixed';
+        c.style.left = Math.random() * 100 + 'vw';
+        c.style.top = '-20px';
+        c.style.width = Math.random() * 10 + 7 + 'px';
+        c.style.height = c.style.width;
+        c.style.background = ['#d4af88', '#e8c9a0', '#fff'][Math.floor(Math.random()*3)];
+        c.style.borderRadius = '50%';
+        c.style.opacity = Math.random() * 0.8 + 0.5;
+        c.style.zIndex = '9999';
+        document.body.appendChild(c);
+
+        const duration = Math.random() * 4000 + 3000;
+        c.animate([
+          { transform: 'translateY(0) rotate(0deg)' },
+          { transform: `translateY(${window.innerHeight + 150}px) rotate(${Math.random()*1200}deg)` }
+        ], { duration: duration });
+
+        setTimeout(() => c.remove(), duration + 1000);
+      }
+    }
+
+    // Keyboard support
+    document.addEventListener('keydown', e => {
+      if (e.key === "Enter" && document.getElementById('envelope-screen').style.display !== 'none') {
+        openEnvelope();
+      }
+    });
+  </script>
+</body>
+</html>
