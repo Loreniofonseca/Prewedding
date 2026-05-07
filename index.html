@@ -22,50 +22,39 @@
       position: relative;
     }
 
-    /* Background Foto - Intro (Envelope) */
+    /* Background Foto - Intro */
     #envelope-screen {
       position: fixed; inset: 0;
       background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.5)),
                   url('./Pre Wedding Shoot.webp') center/cover no-repeat;
-      display: flex; 
-      align-items: center; 
-      justify-content: center;
-      z-index: 1000; 
-      transition: opacity 1.8s ease;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 1000; transition: opacity 1.8s ease;
     }
 
-    /* Background Video - Halaman Utama */
+    /* Background Video */
     #bg-video {
-      position: fixed;
-      top: 0; left: 0;
+      position: fixed; top: 0; left: 0;
       width: 100%; height: 100%;
-      object-fit: cover;
-      z-index: -2;
+      object-fit: cover; z-index: -2;
       filter: brightness(0.65) contrast(1.08);
       display: none;
     }
 
     #bg-overlay {
-      position: fixed;
-      top: 0; left: 0;
+      position: fixed; top: 0; left: 0;
       width: 100%; height: 100%;
       background: rgba(63, 42, 42, 0.48);
-      z-index: -1;
-      display: none;
+      z-index: -1; display: none;
     }
 
-    /* Envelope */
     .envelope {
-      width: 340px;
-      height: 230px;
+      width: 340px; height: 230px;
       background: #f5e8d3;
       border: 12px solid #c19a6b;
       border-top: 12px solid #a67c52;
       position: relative;
       box-shadow: 0 25px 60px rgba(0,0,0,0.5);
-      cursor: pointer;
-      overflow: hidden;
-      border-radius: 8px;
+      cursor: pointer; overflow: hidden; border-radius: 8px;
     }
     .flap {
       position: absolute; top: 0; left: 0;
@@ -75,10 +64,8 @@
       transition: all 1.4s cubic-bezier(0.6, 0, 0.3, 1);
       z-index: 2;
     }
-    .envelope.open .flap {
-      transform: rotateX(-165deg); 
-      height: 65px;
-    }
+    .envelope.open .flap { transform: rotateX(-165deg); height: 65px; }
+
     .seal {
       position: absolute; top: 42px; left: 50%;
       transform: translateX(-50%);
@@ -87,20 +74,17 @@
       border: 4px solid #f5e8d3;
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      color: white; font-size: 1.4rem;
-      z-index: 3;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      color: white; font-size: 1.4rem; z-index: 3;
     }
 
     #main-invitation { display: none; }
 
     header {
-      height: 100vh;
-      min-height: 650px;
-      display: flex; align-items: center; justify-content: center;
-      text-align: center; 
-      color: white;
-      position: relative;
+      height: 100vh; min-height: 650px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; color: white; position: relative;
+      padding: 0 20px;
     }
 
     .monogram {
@@ -110,47 +94,33 @@
       text-shadow: 0 10px 30px rgba(0,0,0,0.8);
     }
 
-    .section {
-      padding: 80px 20px;
-      max-width: 1100px;
-      margin: 0 auto;
-      position: relative;
+    .bible-header {
+      margin-top: 40px; max-width: 720px;
+      font-style: italic; line-height: 1.75;
+      font-size: 1.18rem; opacity: 0.95;
     }
 
+    .verse-reference {
+      margin-top: 15px; font-weight: 600;
+      color: var(--gold); font-size: 1.1rem;
+    }
+
+    .section { padding: 80px 20px; max-width: 1100px; margin: 0 auto; }
+
     .content-row {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 40px;
-      align-items: center;
-      margin-bottom: 100px;
+      display: grid; grid-template-columns: 1fr;
+      gap: 40px; align-items: center; margin-bottom: 100px;
     }
     @media (min-width: 768px) {
       .content-row, .content-row.reverse {
-        grid-template-columns: 1fr 1fr;
-        gap: 70px;
+        grid-template-columns: 1fr 1fr; gap: 70px;
       }
     }
 
     .section-img {
-      width: 100%;
-      height: 380px;
-      object-fit: cover;
-      border-radius: 20px;
+      width: 100%; height: 380px;
+      object-fit: cover; border-radius: 20px;
       box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-      transition: transform 0.6s ease;
-    }
-    .content-row:hover .section-img {
-      transform: scale(1.03);
-    }
-
-    .section-text {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: all 1s ease;
-    }
-    .content-row.visible .section-text {
-      opacity: 1;
-      transform: translateY(0);
     }
 
     .card {
@@ -163,56 +133,19 @@
 
     h2 {
       font-family: 'Playfair Display', serif;
-      font-size: 2.6rem;
-      margin-bottom: 20px;
-      text-align: center;
-      color: var(--dark);
-    }
-
-    .music-player {
-      position: fixed;
-      bottom: 25px;
-      right: 25px;
-      background: white;
-      padding: 12px 18px;
-      border-radius: 50px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-      z-index: 999;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    input {
-      width: 100%;
-      padding: 15px;
-      margin: 10px 0;
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      font-size: 1rem;
-    }
-    button {
-      width: 100%;
-      padding: 16px;
-      font-size: 1.05rem;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: all 0.3s;
-      margin: 8px 0;
+      font-size: 2.6rem; margin-bottom: 20px;
+      text-align: center; color: var(--dark);
     }
   </style>
 </head>
 <body>
 
-  <!-- Background Video (Main Page) -->
   <video id="bg-video" loop muted playsinline>
     <source src="./trend slowmo VOLDEN BROWN X LOVE STORY -  De Oliveira - Copy.mp4" type="video/mp4">
   </video>
   <div id="bg-overlay"></div>
 
-  <!-- ENVELOPE SCREEN (Background Foto) -->
+  <!-- ENVELOPE -->
   <div id="envelope-screen">
     <div class="envelope" id="envelope" onclick="openEnvelope()">
       <div class="flap"></div>
@@ -230,32 +163,31 @@
         <div class="monogram">A & M</div>
         <p style="font-size:2rem; margin:12px 0; color:var(--gold);">ARE GETTING MARRIED</p>
         <p style="font-size:1.4rem;">12 December 2030</p>
+        
+        <div class="bible-header">
+          "Love is patient, love is kind. It does not envy, it does not boast, it is not proud. 
+          It does not dishonor others, it is not self-seeking, it is not easily angered, 
+          it keeps no record of wrongs. Love does not delight in evil but rejoices with the truth. 
+          It always protects, always trusts, always hopes, always perseveres. Love never fails."
+          <span class="verse-reference">1 Corinthians 13:4-8</span>
+        </div>
       </div>
     </header>
 
     <div class="section">
-      <!-- Row 1 -->
-      <div class="content-row" id="row1">
-        <img src="./descărcare (1).jpg" class="section-img" alt="Antonio & Maria">
-        <div class="section-text">
-          <div class="card">
-            <h2>With All Our Love</h2>
-            <p style="font-size:1.2rem; line-height:1.8; text-align:center;">
-              Ho gratidaun no haksolok boot, ami konvida ita boot sira atu mai hamutuk ho ami iha dia ne'ebé importante liu iha ami-nia moris.
-            </p>
-          </div>
-        </div>
-      </div>
 
-      <!-- Row 2 -->
+      <!-- Event Details + Dress Code (Digabung) -->
       <div class="content-row reverse" id="row2">
         <div class="section-text">
           <div class="card">
             <h2>Event Details</h2>
-            <div style="display:grid; grid-template-columns:1fr; gap:20px; font-size:1.1rem; text-align:center; line-height:1.7;">
+            <div style="display:grid; grid-template-columns:1fr; gap:18px; font-size:1.1rem; text-align:center; line-height:1.7;">
               <div><strong>Akad Nikah / Holy Matrimony</strong> — 09.00 WIB</div>
               <div><strong>Resepsi / Reception</strong> — 11.00 WIB</div>
               <div><strong>Venue</strong> — Igreja Katedral, Dili</div>
+              <div style="margin-top:10px; padding-top:10px; border-top:1px solid #ddd;">
+                <strong>Dress Code:</strong> <span style="color:var(--gold); font-weight:600;">Light Blue & White</span>
+              </div>
             </div>
           </div>
         </div>
@@ -341,7 +273,6 @@
           screen.style.display = 'none';
           main.style.display = 'block';
 
-          // Aktifkan Video Background
           bgVideo.style.display = 'block';
           bgOverlay.style.display = 'block';
           bgVideo.play().catch(() => {});
@@ -414,16 +345,13 @@
         document.body.appendChild(c);
 
         const duration = Math.random() * 4000 + 3000;
-        c.animate([
-          { transform: 'translateY(0) rotate(0deg)' },
-          { transform: `translateY(${window.innerHeight + 150}px) rotate(${Math.random()*1200}deg)` }
-        ], { duration: duration });
-        
+        c.animate([{ transform: 'translateY(0) rotate(0deg)' }, 
+                   { transform: `translateY(${window.innerHeight + 150}px) rotate(${Math.random()*1200}deg)` }], 
+                  { duration: duration });
         setTimeout(() => c.remove(), duration + 1000);
       }
     }
 
-    // Keyboard Support
     document.addEventListener('keydown', e => {
       if (e.key === "Enter") {
         const envelopeScreen = document.getElementById('envelope-screen');
