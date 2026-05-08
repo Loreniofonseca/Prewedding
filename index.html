@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="tet">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Antonio & Maria • 12.12.2030</title>
   <meta property="og:title" content="Antonio & Maria • 12.12.2030">
-  <meta property="og:description" content="Kami dengan penuh sukacita mengundang Anda untuk merayakan pernikahan kami.">
+  <meta property="og:description" content="We joyfully invite you to celebrate our wedding.">
   <meta property="og:image" content="./Pre Wedding Shoot.webp">
 
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -14,14 +14,13 @@
   <style>
     :root {
       --gold: #d4af88;
-      --dark: #3f2a2a;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: 'Inter', sans-serif;
-      color: var(--dark);
+      color: #f0f0f0;
       overflow-x: hidden;
       line-height: 1.75;
     }
@@ -31,33 +30,14 @@
       position: fixed; top: 0; left: 0;
       width: 100%; height: 100%;
       object-fit: cover; z-index: -2;
-      filter: brightness(0.65) contrast(1.15);
+      filter: brightness(0.62) contrast(1.12);
       display: none;
     }
     #bg-overlay {
       position: fixed; inset: 0;
-      background: rgba(63, 42, 42, 0.48);
+      background: rgba(63, 42, 42, 0.58);
       z-index: -1; display: none;
     }
-
-    /* Navigation */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0;
-      background: rgba(255,255,255,0.96);
-      backdrop-filter: blur(15px);
-      z-index: 1000;
-      padding: 16px 5%;
-      display: none;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-    }
-    .nav-links {
-      display: flex; justify-content: center; gap: 35px; flex-wrap: wrap;
-    }
-    .nav-links a {
-      text-decoration: none; color: var(--dark); font-weight: 500;
-      transition: color 0.3s;
-    }
-    .nav-links a:hover { color: var(--gold); }
 
     /* Envelope */
     #envelope-screen {
@@ -67,6 +47,7 @@
       display: flex; align-items: center; justify-content: center;
       z-index: 2000; transition: opacity 1.8s ease;
     }
+
     .envelope {
       width: 340px; height: 230px;
       background: #f5e8d3;
@@ -116,16 +97,16 @@
       display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;
     }
     .countdown-item {
-      background: rgba(255,255,255,0.18);
-      backdrop-filter: blur(10px);
-      padding: 12px 20px;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(12px);
+      padding: 12px 22px;
       border-radius: 16px;
-      min-width: 85px;
+      min-width: 90px;
       text-align: center;
     }
     .countdown-item span {
       display: block;
-      font-size: 2.1rem;
+      font-size: 2.2rem;
       font-weight: 700;
       color: var(--gold);
     }
@@ -142,16 +123,18 @@
     .section-img {
       width: 100%; height: 420px;
       object-fit: cover; border-radius: 20px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
     }
 
-    .card, .rsvp-form {
+    .card, .rsvp-form, .bible-card {
       background: rgba(255, 255, 255, 0.13);
       backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
       border: 1px solid rgba(255, 255, 255, 0.25);
       border-radius: 24px;
       padding: 45px 35px;
-      box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.35);
+      color: #f0f0f0;
     }
 
     h2 {
@@ -159,15 +142,31 @@
       font-size: 2.8rem;
       text-align: center;
       margin-bottom: 30px;
-      color: #2c2c2c;
+      color: white;
     }
 
     .story-text {
-      font-size: 1.15rem;
+      font-size: 1.17rem;
       text-align: justify;
       line-height: 1.9;
-      max-width: 720px;
-      margin: 0 auto;
+    }
+
+    .bible-card {
+      text-align: center;
+      font-style: italic;
+      font-size: 1.23rem;
+      line-height: 1.85;
+      max-width: 820px;
+      margin: 60px auto;
+    }
+
+    .verse-reference {
+      display: block;
+      margin-top: 25px;
+      font-style: normal;
+      font-size: 1.05rem;
+      color: var(--gold);
+      font-weight: 600;
     }
 
     .gallery {
@@ -190,7 +189,7 @@
     }
     .timeline::before {
       content: ''; position: absolute; left: 50%; top: 0; bottom: 0;
-      width: 3px; background: var(--gold); opacity: 0.25;
+      width: 3px; background: var(--gold); opacity: 0.3;
       transform: translateX(-50%);
     }
     .timeline-item {
@@ -198,12 +197,11 @@
       display: flex;
       align-items: center;
       gap: 30px;
-      position: relative;
     }
     .timeline-item:nth-child(even) { flex-direction: row-reverse; text-align: right; }
     .timeline-item div:first-child {
       background: var(--gold);
-      color: white;
+      color: #2c2c2c;
       padding: 8px 20px;
       border-radius: 50px;
       font-weight: 600;
@@ -213,11 +211,11 @@
     .music-player {
       position: fixed; bottom: 30px; right: 30px;
       background: rgba(255,255,255,0.9);
+      color: #2c2c2c;
       padding: 12px 22px; border-radius: 50px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.25);
       cursor: pointer; z-index: 10000;
       display: flex; align-items: center; gap: 12px;
-      backdrop-filter: blur(12px);
     }
 
     button:hover { transform: translateY(-3px); }
@@ -229,17 +227,6 @@
     <source src="./trend slowmo VOLDEN BROWN X LOVE STORY -  De Oliveira - Copy.mp4" type="video/mp4">
   </video>
   <div id="bg-overlay"></div>
-
-  <!-- Navigation -->
-  <nav id="navbar">
-    <div class="nav-links">
-      <a href="#story">Our Story</a>
-      <a href="#details">Details</a>
-      <a href="#venue">Venue</a>
-      <a href="#gallery">Gallery</a>
-      <a href="#rsvp">RSVP</a>
-    </div>
-  </nav>
 
   <!-- Envelope -->
   <div id="envelope-screen">
@@ -264,39 +251,50 @@
       </div>
     </header>
 
-    <!-- Our Story - Versi Panjang -->
-    <div class="section" id="story">
+    <!-- Our Story (English) -->
+    <div class="section">
       <div class="card">
         <h2>Our Story</h2>
         <div class="story-text">
           <p>
-            Pertemuan kami dimulai dari sebuah kebetulan yang indah di tahun 2024. Antonio yang sedang bekerja di proyek pembangunan, 
-            dan Maria yang baru pulang dari studi di luar negeri, bertemu di sebuah acara komunitas gereja.
+            Our story began with a beautiful coincidence in 2024. Antonio, who was working on a construction project, 
+            and Maria, who had just returned from her studies abroad, met at a church community event.
           </p>
           <p>
-            Dari obrolan ringan, perlahan tumbuh rasa saling menghargai dan kagum. Antonio terpesona dengan senyum Maria yang tulus 
-            dan hatinya yang penuh kasih, sementara Maria jatuh cinta pada keteguhan iman dan kerja keras Antonio.
+            From casual conversations, a feeling of mutual respect and admiration slowly grew. Antonio was captivated 
+            by Maria’s sincere smile and loving heart, while Maria fell in love with Antonio’s strong faith and hard work.
           </p>
           <p>
-            Melalui banyak doa bersama, tawa, perjalanan, dan juga tantangan kecil, Tuhan semakin meneguhkan hati kami bahwa 
-            kami diciptakan untuk satu sama lain. Setelah dua tahun berjalan bersama, kami yakin bahwa inilah waktu yang Tuhan tentukan 
-            untuk mengikat janji suci di hadapan-Nya dan di hadapan keluarga serta sahabat-sahabat kami.
+            Through many prayers together, laughter, journeys, and small challenges, God strengthened our hearts 
+            that we were created for each other. After two years of walking together, we are certain that this is 
+            the time God has appointed for us to make a sacred covenant before Him and in front of our family and friends.
           </p>
           <p style="text-align:center; margin-top:35px; font-style:italic; color:var(--gold);">
-            "Bukan kebetulan, tapi anugerah.<br>
-            Bukan hanya cinta, tapi panggilan."
+            "Not by coincidence, but by grace.<br>
+            Not just love, but a calling."
           </p>
         </div>
       </div>
     </div>
 
-    <!-- Details -->
+    <!-- Bible Verse -->
+    <div class="section">
+      <div class="bible-card">
+        "Love is patient, love is kind. It does not envy, it does not boast, it is not proud. 
+        It does not dishonor others, it is not self-seeking, it is not easily angered, 
+        it keeps no record of wrongs. Love does not delight in evil but rejoices with the truth. 
+        It always protects, always trusts, always hopes, always perseveres. Love never fails."
+        <span class="verse-reference">1 Corinthians 13:4-8</span>
+      </div>
+    </div>
+
+    <!-- Event Details -->
     <div class="section" id="details">
       <div class="content-row reverse">
         <div>
           <div class="card">
             <h2>Event Details</h2>
-            <div style="font-size:1.15rem; line-height:2.1;">
+            <div style="font-size:1.17rem; line-height:2.1;">
               <p><strong>Holy Matrimony</strong> — 09.00 OTL</p>
               <p><strong>Reception</strong> — 11.00 OTL</p>
               <p><strong>Venue</strong> — Igreja Katedral, Dili</p>
@@ -310,9 +308,9 @@
       <h2 style="margin:80px 0 40px; text-align:center;">Timeline Acara</h2>
       <div class="timeline">
         <div class="timeline-item"><div>09:00</div><div>Holy Matrimony - Igreja Katedral</div></div>
-        <div class="timeline-item"><div>10:30</div><div>Foto Session</div></div>
+        <div class="timeline-item"><div>10:30</div><div>Photo Session</div></div>
         <div class="timeline-item"><div>11:00</div><div>Reception & Lunch</div></div>
-        <div class="timeline-item"><div>14:00</div><div>Hiburan & Dance</div></div>
+        <div class="timeline-item"><div>14:00</div><div>Entertainment & Dance</div></div>
       </div>
     </div>
 
@@ -326,8 +324,8 @@
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3942.057!2d125.566!3d-8.556!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOHLCsDMzJzIxLjYiUyAxMjXCsDMzJzU3LjYiRQ!5e0!3m2!1sid!2sid!4v1730000000000" 
               style="width:100%; height:380px; border:none; border-radius:16px;" allowfullscreen loading="lazy"></iframe>
             <div style="text-align:center; margin-top:25px;">
-              <button onclick="getDirections()" style="background:var(--gold); color:white; padding:14px 32px; border:none; border-radius:50px; font-size:1.1rem;">
-                <i class="fas fa-directions"></i> Dapatkan Petunjuk Arah
+              <button onclick="getDirections()" style="background:var(--gold); color:#2c2c2c; padding:14px 32px; border:none; border-radius:50px; font-size:1.1rem;">
+                <i class="fas fa-directions"></i> Get Directions
               </button>
             </div>
           </div>
@@ -345,23 +343,21 @@
       </div>
     </div>
 
-    <!-- RSVP Google Form -->
+    <!-- RSVP -->
     <div class="section" id="rsvp">
       <div class="content-row reverse">
         <div>
           <div class="rsvp-form">
             <h2>Will You Celebrate With Us?</h2>
-            <p style="text-align:center; margin:25px 0; font-size:1.1rem;">
-              Mohon konfirmasi kehadiran Anda
-            </p>
+            <p style="text-align:center; margin:25px 0; font-size:1.1rem;">Please confirm your attendance</p>
             <div style="text-align:center;">
               <button onclick="openGoogleForm()" 
-                      style="background:linear-gradient(#d4af88,#e8c9a0); color:#3f2a2a; font-size:1.15rem; padding:18px 45px; border:none; border-radius:50px; font-weight:600;">
-                <i class="fas fa-paper-plane"></i> &nbsp; Konfirmasi Kehadiran
+                      style="background:linear-gradient(#d4af88,#e8c9a0); color:#2c2c2c; font-size:1.15rem; padding:18px 45px; border:none; border-radius:50px; font-weight:600;">
+                <i class="fas fa-paper-plane"></i> &nbsp; Confirm Attendance
               </button>
             </div>
-            <p style="text-align:center; margin-top:25px; font-size:0.95rem; opacity:0.75;">
-              Data akan tersimpan otomatis ke Google Form
+            <p style="text-align:center; margin-top:25px; font-size:0.95rem; opacity:0.9;">
+              Data will be saved automatically
             </p>
           </div>
         </div>
@@ -369,8 +365,8 @@
       </div>
     </div>
 
-    <footer style="background:#2c211f; color:#e8d5c0; text-align:center; padding:100px 20px;">
-      <p style="font-size:1.3rem;">Ho amor eternu,</p>
+    <footer style="background:rgba(44,33,31,0.95); color:#e8d5c0; text-align:center; padding:100px 20px;">
+      <p style="font-size:1.3rem;">With eternal love,</p>
       <h1 style="font-family:'Playfair Display',serif; color:var(--gold); font-size:3rem; margin:25px 0;">Antonio & Maria</h1>
       <p>12 • 12 • 2030 • Igreja Katedral, Dili</p>
     </footer>
@@ -384,7 +380,7 @@
   </div>
 
   <audio id="weddingMusic" loop>
-    <source src="./I Think They Call This Love (Cover).mp3" type="audio/mpeg">
+    <source src="./Bruno Mars - Risk It All.mp3" type="audio/mpeg">
   </audio>
 
   <script>
@@ -396,22 +392,19 @@
       const countdownEl = document.getElementById("countdown");
 
       setInterval(() => {
-        const now = new Date().getTime();
-        const distance = countDownDate - now;
-
+        const distance = countDownDate - new Date().getTime();
         if (distance < 0) {
-          countdownEl.innerHTML = `<h3 style="color:var(--gold)">Hari Bahagia Telah Tiba!</h3>`;
+          countdownEl.innerHTML = `<h3 style="color:var(--gold)">The Happy Day Has Arrived!</h3>`;
           return;
         }
-
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const days = Math.floor(distance / (1000*60*60*24));
+        const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
+        const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
 
         countdownEl.innerHTML = `
-          <div class="countdown-item"><span>${days}</span>Hari</div>
-          <div class="countdown-item"><span>${hours}</span>Jam</div>
-          <div class="countdown-item"><span>${minutes}</span>Menit</div>
+          <div class="countdown-item"><span>${days}</span>Days</div>
+          <div class="countdown-item"><span>${hours}</span>Hours</div>
+          <div class="countdown-item"><span>${minutes}</span>Minutes</div>
         `;
       }, 1000);
     }
@@ -420,7 +413,6 @@
       const envelope = document.getElementById('envelope');
       const screen = document.getElementById('envelope-screen');
       const main = document.getElementById('main-invitation');
-      const navbar = document.getElementById('navbar');
 
       envelope.classList.add('open');
 
@@ -429,7 +421,6 @@
         setTimeout(() => {
           screen.style.display = 'none';
           main.style.display = 'block';
-          navbar.style.display = 'block';
 
           document.getElementById('bg-video').style.display = 'block';
           document.getElementById('bg-overlay').style.display = 'block';
@@ -440,11 +431,6 @@
           startCountdown();
         }, 900);
       }, 1400);
-    }
-
-    function openGoogleForm() {
-      // === GANTI LINK INI DENGAN LINK GOOGLE FORM ANDA ===
-      window.open("https://docs.google.com/forms/d/e/1FAIpQLSdxgcxe3GKx0efNUNNW6Nnwhc6S0xcywFhyXK7IMgpRvRYuPQ/viewform?usp=dialog", "_blank");
     }
 
     function toggleMusic() {
@@ -480,11 +466,14 @@
       }
     }
 
+    function openGoogleForm() {
+      window.open("https://docs.google.com/forms/d/e/1FAIpQLSdxgcxe3GKx0efNUNNW6Nnwhc6S0xcywFhyXK7IMgpRvRYuPQ/viewform?usp=dialog", "_blank");
+    }
+
     function getDirections() {
       window.open("https://www.google.com/maps/dir/?api=1&destination=Igreja+Katedral,+Dili", "_blank");
     }
 
-    // Keyboard support
     document.addEventListener('keydown', e => {
       if (e.key === "Enter") {
         if (document.getElementById('envelope-screen').style.display !== 'none') openEnvelope();
