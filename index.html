@@ -4,327 +4,391 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Antonio & Maria • 12.12.2030</title>
+  
+  <!-- PWA & Social Meta -->
+  <meta name="theme-color" content="#d4af88">
+  <link rel="manifest" href="data:application/manifest+json,{
+    'name': 'Antonio & Maria Wedding Invitation',
+    'short_name': 'A&M Wedding',
+    'description': 'Antonio & Maria Wedding - 12.12.2030',
+    'theme_color': '#d4af88',
+    'background_color': '#2c1810',
+    'display': 'standalone',
+    'start_url': '/',
+    'orientation': 'portrait-primary',
+    'icons': [
+      {'src': 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxjaXJjbGUgY3g9Ijk2IiBjeT0iOTYiIHI9Ijk2IiBmaWxsPSIjRDRBRjg4Ii8+Cjx0ZXh0IHg9Ijk2IiB5PSIxMDkiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIzMCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMyQzJDQjMiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkFNPC90ZXh0Pgo8L3N2Zz4=', 'sizes': '192x192', 'type': 'image/png'}
+    ]
+  }">
+  
   <meta property="og:title" content="Antonio & Maria • 12.12.2030">
   <meta property="og:description" content="We joyfully invite you to celebrate our wedding.">
   <meta property="og:image" content="./Pre Wedding Shoot.webp">
+  <meta property="og:type" content="website">
+  
+  <!-- Preload Critical Resources -->
+  <link rel="preload" href="./Pre Wedding Shoot.webp" as="image">
+  <link rel="preload" href="./trend slowmo VOLDEN BROWN X LOVE STORY -  De Oliveira - Copy.mp4" as="video">
+  <link rel="preload" href="./Bruno Mars - Risk It All.mp3" as="audio">
 
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   
   <style>
     :root {
       --gold: #d4af88;
+      --gold-dark: #a67c52;
+      --cream: #f5e8d3;
+      --text-light: #f0f0f0;
+      --text-dark: #2c2c2c;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
+    html { scroll-behavior: smooth; }
+
     body {
       font-family: 'Inter', sans-serif;
-      color: #f0f0f0;
+      color: var(--text-light);
       overflow-x: hidden;
       line-height: 1.75;
+      transition: all 0.3s ease;
+    }
+
+    /* Custom Cursor */
+    body.custom-cursor { cursor: none; }
+    .cursor, .cursor-trail {
+      position: fixed; width: 24px; height: 24px;
+      background: radial-gradient(circle, var(--gold), transparent);
+      border-radius: 50%; pointer-events: none;
+      z-index: 99999; mix-blend-mode: screen;
+      transition: transform 0.1s ease;
+    }
+    .cursor.click { transform: scale(0.8); }
+    .cursor.hover { transform: scale(1.5); }
+
+    /* Particles & Floating Hearts */
+    #particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+    .heart-particle {
+      position: fixed; font-size: 20px; color: var(--gold);
+      animation: floatHeart 12s linear infinite;
+      z-index: 100; opacity: 0.7;
+    }
+    @keyframes floatHeart {
+      0% { transform: translateY(100vh) rotate(0deg) scale(0.5); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100px) rotate(720deg) scale(1); opacity: 0; }
     }
 
     /* Background */
     #bg-video {
-      position: fixed; top: 0; left: 0;
-      width: 100%; height: 100%;
-      object-fit: cover; z-index: -2;
-      filter: brightness(0.62) contrast(1.12);
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      object-fit: cover; z-index: -2; filter: brightness(0.62) contrast(1.12);
       display: none;
     }
     #bg-overlay {
-      position: fixed; inset: 0;
-      background: rgba(63, 42, 42, 0.58);
+      position: fixed; inset: 0; background: rgba(63, 42, 42, 0.58);
       z-index: -1; display: none;
     }
 
-    /* Envelope */
+    /* Navbar Premium */
+    .navbar {
+      position: fixed; top: 30px; left: 50%; transform: translateX(-50%);
+      background: rgba(245, 232, 211, 0.95); backdrop-filter: blur(30px);
+      padding: 16px 40px; border-radius: 50px; z-index: 1000;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3); display: none; gap: 30px;
+      border: 1px solid rgba(212, 175, 136, 0.3);
+    }
+    .navbar.active { 
+      display: flex; animation: slideDownPremium 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
+    }
+    @keyframes slideDownPremium {
+      from { opacity: 0; transform: translateX(-50%) translateY(-30px) scale(0.95); }
+      to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+    }
+
+    /* Envelope Enhanced */
     #envelope-screen {
-      position: fixed; inset: 0;
-      background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.6)),
+      position: fixed; inset: 0; z-index: 2000;
+      background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.7)),
                   url('./Pre Wedding Shoot.webp') center/cover no-repeat;
       display: flex; align-items: center; justify-content: center;
-      z-index: 2000; transition: opacity 1.8s ease;
     }
-
     .envelope {
-      width: 340px; height: 230px;
-      background: #f5e8d3;
-      border: 12px solid #c19a6b;
-      border-top: 12px solid #a67c52;
-      position: relative;
-      box-shadow: 0 25px 60px rgba(0,0,0,0.5);
-      cursor: pointer; overflow: hidden; border-radius: 8px;
+      width: 360px; height: 250px; background: #f5e8d3;
+      border: 14px solid #c19a6b; border-top: 14px solid #a67c52;
+      position: relative; box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+      cursor: pointer; overflow: hidden; border-radius: 12px;
+      transition: all 0.3s;
     }
-    .flap {
-      position: absolute; top: 0; left: 0;
-      width: 100%; height: 120px;
-      background: linear-gradient(#e8c9a0, #d4af88);
-      clip-path: polygon(0 0, 50% 65%, 100% 0);
-      transition: all 1.4s cubic-bezier(0.6, 0, 0.3, 1);
-      z-index: 2;
-    }
-    .envelope.open .flap { transform: rotateX(-165deg); height: 65px; }
+    .envelope:hover { transform: scale(1.02); }
+    @media (max-width: 480px) { .envelope { width: 320px; height: 220px; } }
 
-    .seal {
-      position: absolute; top: 42px; left: 50%;
-      transform: translateX(-50%);
-      width: 60px; height: 60px;
-      background: radial-gradient(#c19a6b, #8c5f2e);
-      border: 4px solid #f5e8d3;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      color: white; font-size: 1.4rem; z-index: 3;
+    /* Scroll Animations Enhanced */
+    @keyframes fadeInUpPremium {
+      from { opacity: 0; transform: translateY(80px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
+    .fade-in-up { opacity: 0; transform: translateY(60px); transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+    .fade-in-up.animated { animation: fadeInUpPremium 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
 
-    header {
-      height: 100vh; min-height: 650px;
-      display: flex; align-items: center; justify-content: center;
-      text-align: center; color: white; position: relative;
-      padding: 0 20px;
+    /* Cards Premium */
+    .card, .rsvp-premium, .bible-card {
+      background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(35px);
+      border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 28px;
+      padding: 55px 45px; box-shadow: 0 30px 70px rgba(0, 0, 0, 0.4);
+      position: relative; overflow: hidden;
+    }
+    .card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--gold), transparent);
     }
 
-    .monogram {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(5rem, 13vw, 8rem);
-      letter-spacing: -8px;
-      text-shadow: 0 15px 40px rgba(0,0,0,0.8);
-    }
-
-    .countdown {
+    /* Google Form Styling */
+    .google-form-container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      padding: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
       margin: 40px 0;
-      display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;
     }
-    .countdown-item {
-      background: rgba(255,255,255,0.15);
-      backdrop-filter: blur(12px);
-      padding: 12px 22px;
-      border-radius: 16px;
-      min-width: 90px;
-      text-align: center;
-    }
-    .countdown-item span {
-      display: block;
-      font-size: 2.2rem;
-      font-weight: 700;
-      color: var(--gold);
+    .google-form-container iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+      border-radius: 20px;
     }
 
-    .section { padding: 100px 20px; max-width: 1200px; margin: 0 auto; }
+    /* Music Player Premium */
+    .music-player-premium {
+      position: fixed; bottom: 40px; right: 40px; z-index: 10001;
+      background: rgba(255,255,255,0.95); backdrop-filter: blur(30px);
+      border-radius: 24px; padding: 24px; box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+      width: 380px; max-width: 90vw; cursor: pointer;
+      border: 1px solid rgba(212, 175, 136, 0.3); transition: all 0.4s;
+    }
+    .music-player-premium:hover { transform: translateY(-8px); box-shadow: 0 35px 80px rgba(0,0,0,0.5); }
+    .album-art { width: 70px; height: 70px; border-radius: 16px; overflow: hidden; margin-right: 20px; }
+    .album-art img { width: 100%; height: 100%; object-fit: cover; }
+    .track-info { flex: 1; min-width: 0; }
+    .progress-bar { height: 4px; background: rgba(0,0,0,0.2); border-radius: 2px; overflow: hidden; margin: 8px 0; }
+    .progress { height: 100%; background: var(--gold); width: 45%; border-radius: 2px; transition: width 0.1s; }
+    .controls { display: flex; gap: 16px; align-items: center; }
+    .volume-control { display: flex; align-items: center; gap: 12px; font-size: 0.9rem; }
 
+    /* Couple Timeline Interactive */
+    .couple-timeline {
+      max-width: 900px; margin: 60px auto; position: relative;
+    }
+    .timeline-item {
+      display: flex; align-items: center; gap: 40px; margin: 60px 0;
+      opacity: 0.7; transition: all 0.5s; cursor: pointer;
+    }
+    .timeline-item.active { opacity: 1; transform: scale(1.05); }
+    .timeline-item img { width: 120px; height: 120px; border-radius: 20px; object-fit: cover; flex-shrink: 0; }
+    .story-bubble {
+      background: rgba(255,255,255,0.15); backdrop-filter: blur(20px);
+      padding: 30px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.2);
+      flex: 1; transform: translateX(20px); transition: all 0.4s;
+    }
+    .timeline-item:hover .story-bubble { transform: translateX(0); }
+
+    /* RSVP Premium */
+    .rsvp-premium { text-align: center; }
+    .rsvp-btn-large {
+      font-size: 1.4rem !important;
+      padding: 24px 60px !important;
+      margin: 40px 0 !important;
+      box-shadow: 0 20px 50px rgba(212,175,136,0.5) !important;
+    }
+    .rsvp-btn-large:hover {
+      transform: translateY(-6px) !important;
+      box-shadow: 0 30px 70px rgba(212,175,136,0.7) !important;
+    }
+
+    /* Venue Google Maps */
+    .venue-iframe {
+      width: 100%; height: 450px; border-radius: 24px; border: none;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    }
+
+    /* Gallery */
+    .gallery {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px; margin-top: 40px;
+    }
+    .gallery-img {
+      width: 100%; height: 350px; object-fit: cover; border-radius: 24px;
+      transition: all 0.5s; box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    }
+    .gallery-img:hover {
+      transform: scale(1.05) rotate(1deg); box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+    }
+
+    /* Content Row */
     .content-row {
       display: grid; grid-template-columns: 1fr; gap: 60px; align-items: center;
     }
     @media (min-width: 768px) {
       .content-row, .content-row.reverse { grid-template-columns: 1fr 1fr; gap: 80px; }
+      .content-row.reverse { grid-template-columns: 1fr 1fr; }
+    }
+    .section-img { width: 100%; height: 450px; object-fit: cover; border-radius: 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+
+    /* Buttons */
+    .btn-premium {
+      background: linear-gradient(135deg, var(--gold), var(--cream));
+      color: #2c2c2c; padding: 18px 45px; border: none; border-radius: 50px;
+      font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s;
+      display: inline-flex; align-items: center; gap: 12px; box-shadow: 0 10px 30px rgba(212,175,136,0.4);
+      text-decoration: none;
+    }
+    .btn-premium:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(212,175,136,0.6); }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .music-player-premium { bottom: 20px; right: 20px; width: calc(100vw - 40px); padding: 20px; }
+      .couple-timeline { flex-direction: column; text-align: center; gap: 20px; }
+      .timeline-item img { width: 100px; height: 100px; }
+      .section { padding: 80px 20px; }
+      .google-form-container iframe { height: 500px; }
+      .rsvp-btn-large { font-size: 1.2rem !important; padding: 20px 40px !important; }
     }
 
-    .section-img {
-      width: 100%; height: 420px;
-      object-fit: cover; border-radius: 20px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-    }
+    /* Header Styles */
+    header { height: 100vh; min-height: 700px; display: flex; align-items: center; justify-content: center; text-align: center; position: relative; padding: 0 20px; }
+    .monogram { font-family: 'Playfair Display', serif; font-size: clamp(5rem, 14vw, 9rem); letter-spacing: -8px; text-shadow: 0 20px 50px rgba(0,0,0,0.9); margin-bottom: 20px; }
+    .countdown { margin: 50px 0; display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
+    .countdown-item { background: rgba(255,255,255,0.2); backdrop-filter: blur(15px); padding: 20px 28px; border-radius: 20px; min-width: 100px; text-align: center; }
+    .countdown-item span { font-size: 2.8rem; font-weight: 700; color: var(--gold); display: block; }
+    .countdown-item small { font-size: 0.85rem; opacity: 0.8; }
+    .section { padding: 120px 20px; max-width: 1300px; margin: 0 auto; }
+    h2 { font-family: 'Playfair Display', serif; font-size: 3.2rem; text-align: center; margin-bottom: 40px; color: white; }
+    .personal-greeting { font-size: 1.3rem; text-align: center; margin-bottom: 20px; color: var(--gold); font-style: italic; font-weight: 500; }
 
-    .card, .rsvp-form, .bible-card {
-      background: rgba(255, 255, 255, 0.13);
-      backdrop-filter: blur(28px);
-      -webkit-backdrop-filter: blur(28px);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      border-radius: 24px;
-      padding: 45px 35px;
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.35);
-      color: #f0f0f0;
-    }
-
-    h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.8rem;
-      text-align: center;
-      margin-bottom: 30px;
-      color: white;
-    }
-
-    .story-text {
-      font-size: 1.17rem;
-      text-align: justify;
-      line-height: 1.9;
-    }
-
-    .bible-card {
-      text-align: center;
-      font-style: italic;
-      font-size: 1.23rem;
-      line-height: 1.85;
-      max-width: 820px;
-      margin: 60px auto;
-    }
-
-    .verse-reference {
-      display: block;
-      margin-top: 25px;
-      font-style: normal;
-      font-size: 1.05rem;
-      color: var(--gold);
-      font-weight: 600;
-    }
-
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
-    }
-    .gallery img {
-      width: 100%; height: 320px;
-      object-fit: cover;
-      border-radius: 20px;
-      transition: all 0.4s;
-    }
-    .gallery img:hover { transform: scale(1.05); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
-
-    .timeline {
-      position: relative;
-      max-width: 820px;
-      margin: 50px auto;
-    }
-    .timeline::before {
-      content: ''; position: absolute; left: 50%; top: 0; bottom: 0;
-      width: 3px; background: var(--gold); opacity: 0.3;
-      transform: translateX(-50%);
-    }
-    .timeline-item {
-      margin: 45px 0;
-      display: flex;
-      align-items: center;
-      gap: 30px;
-    }
-    .timeline-item:nth-child(even) { flex-direction: row-reverse; text-align: right; }
-    .timeline-item div:first-child {
-      background: var(--gold);
-      color: #2c2c2c;
-      padding: 8px 20px;
-      border-radius: 50px;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-
-    .music-player {
-      position: fixed; bottom: 30px; right: 30px;
-      background: rgba(255,255,255,0.9);
-      color: #2c2c2c;
-      padding: 12px 22px; border-radius: 50px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-      cursor: pointer; z-index: 10000;
-      display: flex; align-items: center; gap: 12px;
-    }
-
-    button:hover { transform: translateY(-3px); }
+    /* Footer */
+    footer { background: rgba(44,33,31,0.95); color: #e8d5c0; text-align: center; padding: 120px 20px; }
   </style>
 </head>
 <body>
 
+  <!-- Particles Canvas -->
+  <canvas id="particles"></canvas>
+
+  <!-- Background Video -->
   <video id="bg-video" loop muted playsinline>
     <source src="./trend slowmo VOLDEN BROWN X LOVE STORY -  De Oliveira - Copy.mp4" type="video/mp4">
   </video>
   <div id="bg-overlay"></div>
 
-  <!-- Envelope -->
+  <!-- Navbar Premium -->
+  <nav class="navbar" id="navbar">
+    <a href="#story" class="navbar-link" data-section="story">Our Story</a>
+    <a href="#timeline" class="navbar-link" data-section="timeline">Timeline</a>
+    <a href="#venue" class="navbar-link" data-section="venue">Venue</a>
+    <a href="#gallery" class="navbar-link" data-section="gallery">Gallery</a>
+    <a href="#rsvp" class="navbar-link" data-section="rsvp">RSVP</a>
+  </nav>
+
+  <!-- Envelope Screen - DIRECT ACCESS -->
   <div id="envelope-screen">
-    <div class="envelope" id="envelope" onclick="openEnvelope()">
+    <div class="envelope" id="envelope" onclick="openEnvelope()" tabindex="0" aria-label="Click to open invitation">
       <div class="flap"></div>
       <div class="seal">A&M</div>
-      <div style="position:absolute; top:55%; left:50%; transform:translate(-50%,-50%); text-align:center; color:#f5e8d3; font-size:1.1rem; z-index:1; text-shadow: 0 2px 10px rgba(0,0,0,0.7);">
+      <div style="position:absolute; top:55%; left:50%; transform:translate(-50%,-50%); text-align:center; color:#f5e8d3; font-size:1.2rem; z-index:1; text-shadow: 0 3px 15px rgba(0,0,0,0.8);">
         <strong>Antonio & Maria</strong><br><small>12.12.2030</small>
       </div>
     </div>
   </div>
 
-  <!-- Main Content -->
+  <!-- Main Invitation -->
   <div id="main-invitation" style="display: none;">
 
     <header>
-      <div>
-        <div class="monogram">A & M</div>
-        <p style="font-size:2.1rem; margin:15px 0; color:var(--gold);">ARE GETTING MARRIED</p>
-        <p style="font-size:1.5rem;">12 December 2030 • Dili</p>
-        <div class="countdown" id="countdown"></div>
+      <div class="fade-in-up">
+        <div id="personalGreeting" class="personal-greeting fade-in-up"></div>
+        <div class="monogram fade-in-up">A & M</div>
+        <p style="font-size:2.3rem; margin:20px 0; color:var(--gold);" class="fade-in-up stagger-1">ARE GETTING MARRIED</p>
+        <p style="font-size:1.7rem;" class="fade-in-up stagger-2">12 December 2030 • Dili</p>
+        <div class="countdown fade-in-up stagger-3" id="countdown"></div>
       </div>
     </header>
 
-    <!-- Our Story (English) -->
-    <div class="section">
-      <div class="card">
-        <h2>Our Story</h2>
-        <div class="story-text">
-          <p>
-            Our story began with a beautiful coincidence in 2024. Antonio, who was working on a construction project, 
-            and Maria, who had just returned from her studies abroad, met at a church community event.
-          </p>
-          <p>
-            From casual conversations, a feeling of mutual respect and admiration slowly grew. Antonio was captivated 
-            by Maria’s sincere smile and loving heart, while Maria fell in love with Antonio’s strong faith and hard work.
-          </p>
-          <p>
-            Through many prayers together, laughter, journeys, and small challenges, God strengthened our hearts 
-            that we were created for each other. After two years of walking together, we are certain that this is 
-            the time God has appointed for us to make a sacred covenant before Him and in front of our family and friends.
-          </p>
-          <p style="text-align:center; margin-top:35px; font-style:italic; color:var(--gold);">
-            "Not by coincidence, but by grace.<br>
-            Not just love, but a calling."
-          </p>
+    <!-- Our Story with Interactive Timeline -->
+    <div class="section" id="story">
+      <div class="card fade-in-up">
+        <h2 class="fade-in-up stagger-1">Our Love Journey</h2>
+        <div class="couple-timeline" id="coupleTimeline">
+          <div class="timeline-item fade-in-up stagger-2" data-year="2024">
+            <img src="./descărcare (1).jpg" alt="2024">
+            <div class="story-bubble">
+              <h4>2024 - Divine Encounter</h4>
+              <p>We met at church during a community event. From casual conversations grew mutual respect and admiration.</p>
+            </div>
+          </div>
+          <div class="timeline-item fade-in-up stagger-3" data-year="2025">
+            <img src="./Pre Wedding Shoot.webp" alt="2025">
+            <div class="story-bubble">
+              <h4>2025 - Growing Together</h4>
+              <p>Through prayers, laughter, journeys, and challenges, God confirmed we were meant for each other.</p>
+            </div>
+          </div>
+          <div class="timeline-item fade-in-up" data-year="2030">
+            <img src="./descărcare.webp" alt="2030">
+            <div class="story-bubble">
+              <h4>2030 - Forever Covenant</h4>
+              <p>After 6 years of preparation, we make our sacred vows before God and loved ones.</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Bible Verse -->
     <div class="section">
-      <div class="bible-card">
+      <div class="bible-card fade-in-up">
         "Love is patient, love is kind. It does not envy, it does not boast, it is not proud. 
         It does not dishonor others, it is not self-seeking, it is not easily angered, 
         it keeps no record of wrongs. Love does not delight in evil but rejoices with the truth. 
         It always protects, always trusts, always hopes, always perseveres. Love never fails."
-        <span class="verse-reference">1 Corinthians 13:4-8</span>
+        <span class="verse-reference" style="display:block; margin-top:30px; font-style:normal; font-size:1.1rem; color:var(--gold); font-weight:600;">1 Corinthians 13:4-8</span>
       </div>
     </div>
 
     <!-- Event Details -->
-    <div class="section" id="details">
+    <div class="section" id="timeline">
+      <h2 style="margin-bottom:60px;" class="fade-in-up">Event Schedule</h2>
       <div class="content-row reverse">
-        <div>
-          <div class="card">
-            <h2>Event Details</h2>
-            <div style="font-size:1.17rem; line-height:2.1;">
-              <p><strong>Holy Matrimony</strong> — 09.00 OTL</p>
-              <p><strong>Reception</strong> — 11.00 OTL</p>
-              <p><strong>Venue</strong> — Igreja Katedral, Dili</p>
-              <p><strong>Dress Code:</strong> <span style="color:var(--gold); font-weight:600;">Light Blue & White</span></p>
+        <div class="fade-in-up">
+          <div class="card fade-in-up stagger-1">
+            <div style="font-size:1.2rem; line-height:2.2;">
+              <p><strong>📍 Holy Matrimony</strong> — 09:00 OTL</p>
+              <p><strong>📸 Photo Session</strong> — 10:30 OTL</p>
+              <p><strong>🍽️ Reception & Lunch</strong> — 11:00 OTL</p>
+              <p><strong>🎉 Entertainment</strong> — 14:00 OTL</p>
+              <p style="margin-top:30px;"><strong>Dress Code:</strong> <span style="color:var(--gold); font-weight:700;">Light Blue & White</span></p>
             </div>
           </div>
         </div>
-        <img src="./descărcare.webp" class="section-img" alt="Antonio & Maria">
-      </div>
-
-      <h2 style="margin:80px 0 40px; text-align:center;">Timeline Acara</h2>
-      <div class="timeline">
-        <div class="timeline-item"><div>09:00</div><div>Holy Matrimony - Igreja Katedral</div></div>
-        <div class="timeline-item"><div>10:30</div><div>Photo Session</div></div>
-        <div class="timeline-item"><div>11:00</div><div>Reception & Lunch</div></div>
-        <div class="timeline-item"><div>14:00</div><div>Entertainment & Dance</div></div>
+        <img src="./descărcare (1).jpg" class="section-img fade-in-up stagger-2" alt="Ceremony" loading="lazy">
       </div>
     </div>
 
-    <!-- Venue -->
+    <!-- Venue with Google Maps -->
     <div class="section" id="venue">
       <div class="content-row">
-        <img src="./Pre Wedding Shoot.webp" class="section-img" alt="Venue">
-        <div>
-          <div class="card">
-            <h2>Venue Location</h2>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3942.057!2d125.566!3d-8.556!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOHLCsDMzJzIxLjYiUyAxMjXCsDMzJzU3LjYiRQ!5e0!3m2!1sid!2sid!4v1730000000000" 
-              style="width:100%; height:380px; border:none; border-radius:16px;" allowfullscreen loading="lazy"></iframe>
-            <div style="text-align:center; margin-top:25px;">
-              <button onclick="getDirections()" style="background:var(--gold); color:#2c2c2c; padding:14px 32px; border:none; border-radius:50px; font-size:1.1rem;">
+        <img src="./Pre Wedding Shoot.webp" class="section-img fade-in-up" alt="Church" loading="lazy">
+        <div class="fade-in-up">
+          <div class="card fade-in-up">
+            <h2 class="fade-in-up">Sacred Venue</h2>
+            <iframe class="venue-iframe fade-in-up" 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3942.057!2d125.566!3d-8.556!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOHLCsDMzJzIxLjYiUyAxMjXCsDMzJzU3LjYiRQ!5e0!3m2!1sid!2sid!4v1730000000000" 
+              allowfullscreen loading="lazy">
+            </iframe>
+            <div style="text-align:center; margin-top:30px;">
+              <button onclick="getDirections()" class="btn-premium">
                 <i class="fas fa-directions"></i> Get Directions
               </button>
             </div>
@@ -335,58 +399,174 @@
 
     <!-- Gallery -->
     <div class="section" id="gallery">
-      <h2>Our Moments</h2>
+      <h2 class="fade-in-up">Our Precious Moments</h2>
       <div class="gallery">
-        <img src="./Pre Wedding Shoot.webp" alt="Pre-wedding 1">
-        <img src="./descărcare.webp" alt="Pre-wedding 2">
-        <img src="./descărcare (1).jpg" alt="Pre-wedding 3">
+        <img src="./Pre Wedding Shoot.webp" class="gallery-img fade-in-up stagger-1" alt="Moment 1" loading="lazy">
+        <img src="./descărcare (1).jpg" class="gallery-img fade-in-up stagger-2" alt="Moment 2" loading="lazy">
+        <img src="./descărcare.webp" class="gallery-img fade-in-up stagger-3" alt="Moment 3" loading="lazy">
       </div>
     </div>
 
-    <!-- RSVP -->
+    <!-- RSVP - Button + Google Form -->
     <div class="section" id="rsvp">
       <div class="content-row reverse">
-        <div>
-          <div class="rsvp-form">
-            <h2>Will You Celebrate With Us?</h2>
-            <p style="text-align:center; margin:25px 0; font-size:1.1rem;">Please confirm your attendance</p>
-            <div style="text-align:center;">
-              <button onclick="openGoogleForm()" 
-                      style="background:linear-gradient(#d4af88,#e8c9a0); color:#2c2c2c; font-size:1.15rem; padding:18px 45px; border:none; border-radius:50px; font-weight:600;">
-                <i class="fas fa-paper-plane"></i> &nbsp; Confirm Attendance
-              </button>
-            </div>
-            <p style="text-align:center; margin-top:25px; font-size:0.95rem; opacity:0.9;">
-              Data will be saved automatically
+        <div class="fade-in-up">
+          <div class="rsvp-premium fade-in-up card">
+            <h2 class="fade-in-up">Will You Join Our Joy?</h2>
+            <p style="margin:30px 0; font-size:1.15rem;" class="fade-in-up stagger-1">Confirm your attendance in 30 seconds</p>
+            
+            <!-- BIG RSVP BUTTON -->
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdxgcxe3GKx0efNUNNW6Nnwhc6S0xcywFhyXK7IMgpRvRYuPQ/viewform?usp=dialog" 
+               target="_blank" 
+               class="btn-premium rsvp-btn-large fade-in-up stagger-2">
+              <i class="fas fa-paper-plane"></i>
+              Confirm Your Attendance
+            </a>
+            
+            <p style="opacity:0.8; font-size:0.95rem;" class="fade-in-up stagger-3">Secure & private • Data saved automatically</p>
+          </div>
+          
+          <!-- Google Form (opens in new tab when button clicked) -->
+          <div class="google-form-container fade-in-up stagger-4" style="display:none;">
+            <!-- Form ini tidak ditampilkan, hanya sebagai placeholder -->
+            <p style="text-align:center; color:var(--gold); font-size:1.1rem;">
+              Please use the button above to confirm ✨
             </p>
           </div>
         </div>
-        <img src="./descărcare (1).jpg" class="section-img" alt="Couple">
+        <img src="./descărcare.webp" class="section-img fade-in-up" alt="Love" loading="lazy">
       </div>
     </div>
 
-    <footer style="background:rgba(44,33,31,0.95); color:#e8d5c0; text-align:center; padding:100px 20px;">
-      <p style="font-size:1.3rem;">With eternal love,</p>
-      <h1 style="font-family:'Playfair Display',serif; color:var(--gold); font-size:3rem; margin:25px 0;">Antonio & Maria</h1>
-      <p>12 • 12 • 2030 • Igreja Katedral, Dili</p>
+    <footer class="fade-in-up">
+      <p style="font-size:1.4rem;">With eternal love and blessings,</p>
+      <h1 style="font-family:'Playfair Display',serif; color:var(--gold); font-size:3.5rem; margin:30px 0;">Antonio & Maria</h1>
+      <p style="opacity:0.9;">12 • 12 • 2030 • Igreja Katedral, Dili</p>
+      <p style="margin-top:20px; opacity:0.7; font-size:0.9rem;">Made with ❤️ for our sacred union</p>
     </footer>
   </div>
 
-  <!-- Music Player -->
-  <div class="music-player" onclick="toggleMusic()">
-    <i class="fas fa-music"></i>
-    <span>Our Song</span>
-    <i class="fas fa-pause" id="musicIcon"></i>
+  <!-- Premium Music Player -->
+  <div class="music-player-premium" id="musicPlayer" onclick="toggleMusic()">
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <div class="album-art">
+        <img src="./Pre Wedding Shoot.webp" id="albumArt" alt="Album">
+      </div>
+      <div class="track-info">
+        <div style="font-weight: 600; font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Risk It All</div>
+        <div style="font-size: 0.8rem; opacity: 0.7;">Bruno Mars</div>
+        <div class="progress-bar">
+          <div class="progress" id="progressBar"></div>
+        </div>
+      </div>
+    </div>
+    <div class="controls">
+      <i class="fas fa-play" id="playBtn"></i>
+    </div>
+    <div class="volume-control">
+      <i class="fas fa-volume-up"></i>
+      <input type="range" id="volumeSlider" min="0" max="100" value="70" onchange="setVolume(this.value)">
+    </div>
   </div>
 
+  <!-- Audio -->
   <audio id="weddingMusic" loop>
-    <source src="./Bruno Mars - Risk It All.mp3" type="audio/mpeg">
+    <source src="./The Police - Every Breath You Take (Official Music Video).mp3" type="audio/mpeg">
   </audio>
 
+  <!-- Custom Cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-trail" id="cursorTrail"></div>
+  
   <script>
-    let isPlaying = true;
+    // Global State
+    let isPlaying = false;
     const audio = document.getElementById('weddingMusic');
 
+    // Personalization (tanpa QR)
+    function personalizeInvitation() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const guestName = urlParams.get('guest') || 'Beloved Guest';
+      document.getElementById('personalGreeting').innerHTML = 
+        `Dear <strong>${guestName}</strong>, we joyfully invite you...`;
+    }
+
+    // Custom Cursor
+    function initCursor() {
+      const cursor = document.getElementById('cursor');
+      const trail = document.getElementById('cursorTrail');
+      
+      document.body.classList.add('custom-cursor');
+      
+      document.addEventListener('mousemove', (e) => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+        trail.style.left = e.clientX + 'px';
+        trail.style.top = e.clientY + 'px';
+      });
+
+      // Hover effects
+      document.querySelectorAll('a, button, .envelope, .timeline-item, .gallery-img, .btn-premium').forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        el.addEventListener('click', () => cursor.classList.add('click'));
+      });
+    }
+
+    // Particles System
+    function initParticles() {
+      const canvas = document.getElementById('particles');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const particles = [];
+      for (let i = 0; i < 80; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          vx: (Math.random() - 0.5) * 0.5,
+          vy: (Math.random() - 0.5) * 0.5,
+          size: Math.random() * 3 + 1,
+          opacity: Math.random() * 0.5 + 0.2
+        });
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(212, 175, 136, ${p.opacity})`;
+          ctx.fill();
+
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+          if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+        });
+        requestAnimationFrame(animate);
+      }
+      animate();
+
+      window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      });
+    }
+
+    // Floating Hearts
+    function createHeart() {
+      const heart = document.createElement('i');
+      heart.className = 'fas fa-heart heart-particle';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (Math.random() * 3 + 8) + 's';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 12000);
+    }
+    setInterval(createHeart, 3000);
+
+    // Countdown
     function startCountdown() {
       const countDownDate = new Date("December 12, 2030 09:00:00").getTime();
       const countdownEl = document.getElementById("countdown");
@@ -394,91 +574,191 @@
       setInterval(() => {
         const distance = countDownDate - new Date().getTime();
         if (distance < 0) {
-          countdownEl.innerHTML = `<h3 style="color:var(--gold)">The Happy Day Has Arrived!</h3>`;
+          countdownEl.innerHTML = `<h3 style="color:var(--gold); font-size:2rem;">The Sacred Day Has Arrived! 💍✨</h3>`;
           return;
         }
         const days = Math.floor(distance / (1000*60*60*24));
         const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
         const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
+        const seconds = Math.floor((distance % (1000*60)) / 1000);
 
         countdownEl.innerHTML = `
-          <div class="countdown-item"><span>${days}</span>Days</div>
-          <div class="countdown-item"><span>${hours}</span>Hours</div>
-          <div class="countdown-item"><span>${minutes}</span>Minutes</div>
+          <div class="countdown-item"><span>${days}</span><small>Days</small></div>
+          <div class="countdown-item"><span>${hours}</span><small>Hours</small></div>
+          <div class="countdown-item"><span>${minutes}</span><small>Minutes</small></div>
+          <div class="countdown-item"><span>${seconds}</span><small>Seconds</small></div>
         `;
       }, 1000);
     }
 
+    // Scroll Animations
+    function initScrollAnimations() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animated');
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -100px 0px' });
+
+      document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+    }
+
+    // Interactive Timeline
+    function initTimeline() {
+      const items = document.querySelectorAll('.timeline-item');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+          }
+        });
+      });
+      items.forEach(item => {
+        item.addEventListener('click', () => {
+          items.forEach(i => i.classList.remove('active'));
+          item.classList.add('active');
+        });
+        observer.observe(item);
+      });
+    }
+
+    // Navbar
+    function initNavbar() {
+      const navbar = document.getElementById('navbar');
+      const links = document.querySelectorAll('.navbar-link');
+      
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 200) navbar.classList.add('active');
+        else navbar.classList.remove('active');
+        
+        // Active link
+        const sections = document.querySelectorAll('.section[id]');
+        let current = '';
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop;
+          if (window.scrollY >= sectionTop - 200) {
+            current = section.getAttribute('id');
+          }
+        });
+        
+        links.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('data-section') === current) {
+            link.classList.add('active');
+          }
+        });
+      });
+    }
+
+    // Music Player
+    function toggleMusic() {
+      if (isPlaying) {
+        audio.pause();
+        document.getElementById('playBtn').className = 'fas fa-play';
+      } else {
+        audio.play();
+        document.getElementById('playBtn').className = 'fas fa-pause';
+      }
+      isPlaying = !isPlaying;
+    }
+
+    function updateProgress() {
+      if (audio.duration) {
+        const progress = (audio.currentTime / audio.duration) * 100;
+        document.getElementById('progressBar').style.width = progress + '%';
+      }
+    }
+    audio.addEventListener('timeupdate', updateProgress);
+
+    function setVolume(value) {
+      audio.volume = value / 100;
+    }
+
+    // Envelope Opening - DIRECT ACCESS
     function openEnvelope() {
       const envelope = document.getElementById('envelope');
       const screen = document.getElementById('envelope-screen');
       const main = document.getElementById('main-invitation');
 
       envelope.classList.add('open');
+      createPremiumConfetti();
 
       setTimeout(() => {
         screen.style.opacity = '0';
         setTimeout(() => {
           screen.style.display = 'none';
           main.style.display = 'block';
-
+          
+          // Initialize everything
           document.getElementById('bg-video').style.display = 'block';
           document.getElementById('bg-overlay').style.display = 'block';
           document.getElementById('bg-video').play().catch(() => {});
-
+          
           audio.play().catch(() => {});
-          createConfetti();
+          personalizeInvitation();
           startCountdown();
-        }, 900);
-      }, 1400);
+          initScrollAnimations();
+          initNavbar();
+          initTimeline();
+          initCursor();
+          initParticles();
+          
+          // Staggered header animation
+          const headerElements = document.querySelectorAll('header .fade-in-up');
+          headerElements.forEach((el, i) => {
+            setTimeout(() => el.classList.add('animated'), i * 250);
+          });
+
+        }, 1000);
+      }, 1600);
     }
 
-    function toggleMusic() {
-      if (isPlaying) {
-        audio.pause();
-        document.getElementById('musicIcon').classList.replace('fa-pause', 'fa-play');
-      } else {
-        audio.play();
-        document.getElementById('musicIcon').classList.replace('fa-play', 'fa-pause');
-      }
-      isPlaying = !isPlaying;
-    }
-
-    function createConfetti() {
-      for (let i = 0; i < 80; i++) {
+    // Premium Confetti
+    function createPremiumConfetti() {
+      for (let i = 0; i < 120; i++) {
         const c = document.createElement('div');
-        c.style.position = 'fixed';
-        c.style.left = Math.random() * 100 + 'vw';
-        c.style.top = '-20px';
-        c.style.width = Math.random() * 10 + 7 + 'px';
-        c.style.height = c.style.width;
-        c.style.background = ['#d4af88', '#e8c9a0', '#fff'][Math.floor(Math.random()*3)];
-        c.style.borderRadius = '50%';
-        c.style.zIndex = '9999';
+        c.style.cssText = `
+          position: fixed; left: ${Math.random() * 100}vw; top: -20px;
+          width: ${Math.random() * 12 + 6}px; height: ${Math.random() * 12 + 6}px;
+          background: ${['#d4af88', '#e8c9a0', '#fff', '#c19a6b'][Math.floor(Math.random()*4)]};
+          border-radius: 50%; z-index: 9999; pointer-events: none;
+          box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        `;
         document.body.appendChild(c);
 
-        const duration = Math.random() * 4500 + 3500;
+        const duration = Math.random() * 5000 + 4000;
         c.animate([
-          { transform: 'translateY(0) rotate(0deg)' },
-          { transform: `translateY(${window.innerHeight + 300}px) rotate(${Math.random()*1500}deg)` }
-        ], { duration: duration });
-        setTimeout(() => c.remove(), duration + 500);
+          { transform: 'translateY(0) rotate(0deg) scale(0)', opacity: 1 },
+          { transform: `translateY(${window.innerHeight}px) rotate(${Math.random()*720}deg) scale(1)`, opacity: 0 }
+        ], { duration, easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' });
+        
+        setTimeout(() => c.remove(), duration + 1000);
       }
     }
 
-    function openGoogleForm() {
-      window.open("https://docs.google.com/forms/d/e/1FAIpQLSdxgcxe3GKx0efNUNNW6Nnwhc6S0xcywFhyXK7IMgpRvRYuPQ/viewform?usp=dialog", "_blank");
-    }
-
+    // External Functions
     function getDirections() {
       window.open("https://www.google.com/maps/dir/?api=1&destination=Igreja+Katedral,+Dili", "_blank");
     }
 
+    // Keyboard Support
     document.addEventListener('keydown', e => {
-      if (e.key === "Enter") {
-        if (document.getElementById('envelope-screen').style.display !== 'none') openEnvelope();
+      if (e.key === "Enter" || e.key === " ") {
+        const envelope = document.getElementById('envelope-screen');
+        if (envelope.style.display !== 'none') {
+          openEnvelope();
+        }
       }
     });
+
+    // Focus envelope
+    window.addEventListener('load', () => {
+      document.getElementById('envelope').focus();
+    });
+
+    // Prevent context menu on long press
+    document.addEventListener('contextmenu', e => e.preventDefault());
   </script>
 </body>
 </html>
