@@ -111,17 +111,21 @@
     }
 
     /* Background System Ultra */
-    #bg-video {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      object-fit: cover; z-index: -2; 
-      filter: brightness(0.55) contrast(1.15) saturate(1.2) blur(0.5px);
+ #bg-video {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  object-fit: cover; z-index: -2; 
+  /* UBAH FILTER INI untuk video lebih jelas */
+  filter: brightness(0.85) contrast(1.05) saturate(1.1) blur(0px);
+  /* SEBELUM: brightness(0.55) contrast(1.15) saturate(1.2) blur(0.5px); */
+}
+}
     }
     #bg-overlay {
       position: fixed; inset: 0; 
       background: 
-        radial-gradient(circle at 20% 80%, rgba(212,175,136,0.08) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(139,95,191,0.06) 0%, transparent 50%),
-        linear-gradient(135deg, rgba(44,24,16,0.95) 0%, rgba(0,0,0,0.98) 100%);
+        radial-gradient(circle at 20% 80%, rgba(212,175,136,0.12) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(139,95,191,0.09) 0%, transparent 50%),
+    linear-gradient(135deg, rgba(44,24,16,0.96) 0%, rgba(0,0,0,0.99) 100%);
       z-index: -1;
     }
 
@@ -250,43 +254,6 @@
       border-radius: 50%; opacity: 0.6;
     }
 
-    /* ULTIMATE MUSIC PLAYER */
-    .music-player-ultra {
-      position: fixed; bottom: 60px; right: 60px; z-index: 10002;
-      background: var(--gradient-glass); backdrop-filter: blur(60px) saturate(180%);
-      border-radius: 32px; padding: 32px; box-shadow: 
-        0 35px 100px rgba(0,0,0,0.6),
-        0 0 0 1px rgba(255,255,255,0.2);
-      width: 450px; max-width: 92vw; cursor: pointer;
-      border: 1px solid rgba(212,175,136,0.3);
-      transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-    .music-player-ultra:hover { 
-      transform: translateY(-12px) scale(1.02); 
-      box-shadow: 0 50px 150px rgba(0,0,0,0.7), 0 0 50px rgba(212,175,136,0.4);
-    }
-    .album-art-ultra { 
-      width: 90px; height: 90px; border-radius: 20px; overflow: hidden; 
-      margin-right: 24px; box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-      transition: all 0.4s;
-    }
-    .album-art-ultra:hover { transform: rotateY(360deg) scale(1.1); }
-    .album-art-ultra img { 
-      width: 100%; height: 100%; object-fit: cover;
-      transition: transform 0.4s;
-    }
-    .music-player-ultra:hover .album-art-ultra img { transform: scale(1.1); }
-    .progress-bar-ultra { 
-      height: 6px; background: rgba(255,255,255,0.2); 
-      border-radius: 3px; overflow: hidden; margin: 12px 0;
-      cursor: pointer;
-    }
-    .progress-ultra { 
-      height: 100%; background: var(--gradient-gold); 
-      width: 45%; border-radius: 3px; transition: width 0.2s;
-      box-shadow: 0 0 10px var(--gold);
-    }
-
     /* INTERACTIVE TIMELINE ULTRA */
     .timeline-ultra {
       max-width: 1100px; margin: 80px auto; position: relative;
@@ -401,7 +368,6 @@
 
     /* Responsive Ultra */
     @media (max-width: 1024px) {
-      .music-player-ultra { bottom: 30px; right: 30px; width: calc(100vw - 60px); padding: 28px; }
       .timeline-ultra { padding: 40px 30px; }
       .timeline-item-ultra { flex-direction: column; text-align: center; gap: 30px; }
       .timeline-line { display: none; }
@@ -487,6 +453,26 @@
       animation: spin 1s linear infinite;
     }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    /* Music Control Button */
+    .music-toggle-btn {
+      position: fixed; bottom: 30px; right: 30px; z-index: 10002;
+      background: var(--gradient-glass); backdrop-filter: blur(40px) saturate(180%);
+      border: 1px solid rgba(212,175,136,0.3);
+      border-radius: 50%; width: 70px; height: 70px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem; color: var(--text-light); cursor: pointer;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.2);
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .music-toggle-btn:hover {
+      transform: translateY(-8px) scale(1.1);
+      box-shadow: 0 30px 80px rgba(212,175,136,0.4);
+    }
+    .music-toggle-btn.playing {
+      background: var(--gradient-gold);
+      color: var(--text-dark);
+    }
   </style>
 </head>
 <body>
@@ -507,6 +493,11 @@
     <source src="./trend slowmo VOLDEN BROWN X LOVE STORY -  De Oliveira - Copy.mp4" type="video/mp4">
   </video>
   <div id="bg-overlay"></div>
+
+  <!-- Simple Music Toggle Button -->
+  <div class="music-toggle-btn" id="musicToggleBtn" title="Toggle Music">
+    <i class="fas fa-music" id="musicIcon"></i>
+  </div>
 
   <!-- Navbar Ultra -->
   <nav class="navbar-ultra" id="navbar-ultra">
@@ -725,35 +716,7 @@
     </footer>
   </div>
 
-  <!-- Ultimate Music Player -->
-  <div class="music-player-ultra" id="musicPlayerUltra" onclick="toggleMusicUltra()">
-    <div style="display: flex; align-items: center; gap: 24px;">
-      <div class="album-art-ultra">
-        <img src="./Pre Wedding Shoot.webp" id="albumArtUltra" alt="Wedding Album">
-      </div>
-      <div class="track-info" style="flex: 1; min-width: 0;">
-        <div style="font-weight: 700; font-size: 1.1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-          Risk It All
-        </div>
-        <div style="font-size: 0.95rem; opacity: 0.8; margin-top: 4px;">Bruno Mars</div>
-        <div class="progress-bar-ultra" onclick="seekAudio(event)">
-          <div class="progress-ultra" id="progressBarUltra"></div>
-        </div>
-      </div>
-    </div>
-    <div class="controls" style="display: flex; gap: 20px; align-items: center; margin-top: 16px;">
-      <i class="fas fa-backward" style="font-size: 1.1rem; opacity: 0.7;" onclick="previousTrack()"></i>
-      <i class="fas fa-play" id="playBtnUltra" style="font-size: 1.8rem; cursor: pointer;"></i>
-      <i class="fas fa-forward" style="font-size: 1.1rem; opacity: 0.7;" onclick="nextTrack()"></i>
-    </div>
-    <div class="volume-control" style="display: flex; align-items: center; gap: 16px; margin-top: 12px; font-size: 0.95rem;">
-      <i class="fas fa-volume-up"></i>
-      <input type="range" id="volumeSliderUltra" min="0" max="100" value="75" onchange="setVolumeUltra(this.value)" style="flex: 1;">
-      <span id="volumePercent">75%</span>
-    </div>
-  </div>
-
-  <!-- Audio Player Ultra -->
+  <!-- Hidden Audio Player (musik tetap autoplay) -->
   <audio id="weddingMusicUltra" loop preload="auto">
     <source src="./Bruno Mars - Risk It All.mp3" type="audio/mpeg">
   </audio>
@@ -764,11 +727,11 @@
   <div class="cursor-glow" id="cursorGlow"></div>
 
   <script>
-    // Global Premium State
+    // Global State
     let isPlaying = false;
-    let currentTrack = 0;
     const audio = document.getElementById('weddingMusicUltra');
-    const tracks = ['./Bruno Mars - Risk It All.mp3']; // Add more tracks if available
+    const musicToggleBtn = document.getElementById('musicToggleBtn');
+    const musicIcon = document.getElementById('musicIcon');
 
     // Loading Screen Ultra
     window.addEventListener('load', () => {
@@ -789,6 +752,29 @@
         `Dearest <strong style="color: var(--gold-light);">${guestName}</strong>,<br>
         We are overjoyed to invite you to witness our sacred union... ✨`;
     }
+
+    // Simple Music Toggle
+    function toggleMusic() {
+      if (isPlaying) {
+        audio.pause();
+        musicIcon.className = 'fas fa-music';
+        musicToggleBtn.classList.remove('playing');
+      } else {
+        audio.play().catch(() => {});
+        musicIcon.className = 'fas fa-pause';
+        musicToggleBtn.classList.add('playing');
+      }
+      isPlaying = !isPlaying;
+    }
+
+    musicToggleBtn.addEventListener('click', toggleMusic);
+
+    // Keyboard shortcut for music (M key)
+    document.addEventListener('keydown', e => {
+      if (e.key === "m" || e.key === "M") {
+        toggleMusic();
+      }
+    });
 
     // ULTIMATE CURSOR SYSTEM
     function initCursorUltra() {
@@ -812,7 +798,7 @@
       });
 
       // Enhanced hover effects
-      const interactiveEls = document.querySelectorAll('a, button, .envelope-ultra, .timeline-item-ultra, .gallery-img-ultra, .btn-ultra, .navbar-link');
+      const interactiveEls = document.querySelectorAll('a, button, .envelope-ultra, .timeline-item-ultra, .gallery-img-ultra, .btn-ultra, .navbar-link, .music-toggle-btn');
       interactiveEls.forEach(el => {
         el.addEventListener('mouseenter', () => {
           cursorMain.classList.add('hover');
@@ -865,6 +851,12 @@
           hue: Math.random() * 60 + 40
         });
       }
+
+      let mouseX = 0, mouseY = 0;
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      });
 
       function animateParticles() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -1069,45 +1061,6 @@
       });
     }
 
-    // ULTIMATE MUSIC SYSTEM
-    function toggleMusicUltra() {
-      if (isPlaying) {
-        audio.pause();
-        document.getElementById('playBtnUltra').className = 'fas fa-play';
-      } else {
-        audio.play().catch(() => {});
-        document.getElementById('playBtnUltra').className = 'fas fa-pause';
-      }
-      isPlaying = !isPlaying;
-    }
-
-    function updateProgressUltra() {
-      if (audio.duration) {
-        const progress = (audio.currentTime / audio.duration) * 100;
-        document.getElementById('progressBarUltra').style.width = progress + '%';
-      }
-    }
-
-    function seekAudio(event) {
-      const rect = event.currentTarget.getBoundingClientRect();
-      const pos = (event.clientX - rect.left) / rect.width;
-      audio.currentTime = pos * audio.duration;
-    }
-
-    function setVolumeUltra(value) {
-      audio.volume = value / 100;
-      document.getElementById('volumePercent').textContent = value + '%';
-    }
-
-    function previousTrack() { /* Implement if multiple tracks */ }
-    function nextTrack() { /* Implement if multiple tracks */ }
-
-    audio.addEventListener('timeupdate', updateProgressUltra);
-    audio.addEventListener('ended', () => {
-      isPlaying = false;
-      document.getElementById('playBtnUltra').className = 'fas fa-play';
-    });
-
     // ENVELOPE OPENING ULTRA EXPERIENCE
     function openEnvelopeUltra() {
       const envelope = document.getElementById('envelope-ultra');
@@ -1132,10 +1085,13 @@
           document.getElementById('bg-overlay').style.display = 'block';
           document.getElementById('bg-video').play().catch(() => {});
           
-          // Staggered initialization
+          // Auto start music at low volume
           setTimeout(() => {
             audio.volume = 0.3;
             audio.play().catch(() => {});
+            isPlaying = true;
+            musicIcon.className = 'fas fa-pause';
+            musicToggleBtn.classList.add('playing');
             personalizeInvitationUltra();
           }, 500);
           
@@ -1232,9 +1188,6 @@
         if (envelopeScreen.style.display !== 'none') {
           openEnvelopeUltra();
         }
-      }
-      if (e.key === "m" || e.key === "M") {
-        toggleMusicUltra();
       }
     });
 
