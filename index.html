@@ -70,17 +70,23 @@
 
     /* MOBILE-OPTIMIZED BACKGROUND */
     #bg-video {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      object-fit: cover; z-index: -2;
-      filter: brightness(0.9) contrast(1.05) saturate(1.1);
-      will-change: transform;
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  object-fit: cover; z-index: -2;
+  /* ✅ VIDEO LEBIH JELAS - FILTER TERBAIK */
+  filter: 
+    brightness(1.05) 
+    contrast(1.12) 
+    saturate(1.25) 
+    sharpness(1.1) 
+    hue-rotate(0deg)
+    blur(0px) !important;
     }
     #bg-overlay {
-      position: fixed; inset: 0;
-      background: radial-gradient(circle at 20% 80%, rgba(212,175,136,0.12) 0%, transparent 50%),
-                  radial-gradient(circle at 80% 20%, rgba(139,95,191,0.09) 0%, transparent 50%),
-                  linear-gradient(135deg, rgba(44,24,16,0.96) 0%, rgba(0,0,0,0.99) 100%);
-      z-index: -1;
+  position: fixed; inset: 0;
+  /* ✅ OVERLAY LEBIH TRANSPARAN */
+  background: 
+    /* Gradient utama lebih soft */
+    linear-gradient(135deg, rgba(44,24,16,0.75) 0%, rgba(0,0,0,0.85) 70%, rgba(0,0,0,0.95) 100%),
     }
 
     /* MOBILE NAVBAR - BOTTOM FIXED */
